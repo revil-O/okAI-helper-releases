@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.1.1 (2026-11-21)
+
+- Prompt cache per model (Settings, Hardware; 2 GB by default): llama.cpp keeps earlier prompts in memory, so going back
+  to another chat or program does not compute its start again (16 GB Mac mini, Ministral 8B, two chats of 5,500 tokens:
+  0.07 instead of 26 seconds). Before, llama.cpp kept up to 8 GB of them outside the memory plan, and a big model's
+  server could vanish without an error. Now the cache is counted in the plan and takes only the memory left beside the
+  model: it never pushes a model off the GPU, and it does not count against the GPU when several models are loaded.
+- The guard measured its starting point right after unloading a model, before macOS had given that memory back: after a
+  model switch its limit stood above the Mac's memory and it would not have stepped in. It now waits (at most five
+  seconds) until the memory is free.
+- The version in the header of every page, as in VulKara: it opens the About page; when a newer version is out it reads
+  "Update to …" and brings the update notice back, also after Later.
+- Settings: Appearance sits next to Memory.
+- Downloads show progress, speed and time left once a second, averaged, instead of with every piece of data.
+- uv 0.13.6 for installing the MLX runtimes: uv 0.12.23 trusted a compromised certificate authority (GHSA-hq85-5cpj-mr62).
+  The packages were and are checked against fixed checksums.
+
 ## 0.1.0 (2026-11-10)
 
 First version.
