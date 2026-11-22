@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.0 (2026-11-22)
+
+- MCP server (Server page, off by default): programs that speak MCP use the local models at /mcp of the app's server,
+  with the same token and the same allowed devices. Tools: list_models, ask_model and embed; the prompt profiles come as
+  MCP prompts. Speaks both MCP generations on one address, 2025-11-25 and 2026-07-28 (official TypeScript SDK 2.4.0).
+  Checked with the MCP Inspector in both generations and with a real MCP program; a device that is not allowed gets 403.
+  Tips: a new entry "MCP server" and a step-by-step guide "MCP step by step" in five languages: the five steps with
+  the port that is set, examples for MCP Inspector, Claude Code, VS Code, Cursor, Continue, LM Studio, Open WebUI and
+  Claude Desktop, and what 401, 403, 404 and other answers mean. The full guide is in docs/MCP.md.
+
 ## 0.1.2 (2026-11-21)
 
 - Downloads and the update check try a failed connection again, twice, after 2 and 5 seconds (GitHub refused

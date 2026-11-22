@@ -5,7 +5,7 @@
 # okAI-helper
 
 **Language models on your Mac, private and local**<br>
-Chat · Prompt profiles · Speech input · OpenAI-compatible server · Models bigger than memory · Models without network · Guard monitor
+Chat · Prompt profiles · Speech input · OpenAI-compatible server · MCP server · Models bigger than memory · Models without network · Guard monitor
 
 [![Release](https://img.shields.io/github/v/release/revil-O/okAI-helper-releases?label=release&color=c2662d)](https://github.com/revil-O/okAI-helper-releases/releases/latest)
 ![macOS](https://img.shields.io/badge/macOS-Apple%20silicon-111?logo=apple&logoColor=white)
@@ -74,7 +74,8 @@ that holds more memory than planned.
 
 ### <img src="docs/icons/messages-square.svg" width="20" height="20" alt=""> For your other tools
 An OpenAI-compatible server (`/v1/chat/completions`, `/v1/embeddings`, `/v1/audio/transcriptions` …) behind a token,
-on this Mac or in your network, limited to the devices you allow. A request loads the model it names.
+on this Mac or in your network, limited to the devices you allow. A request loads the model it names. Programs that
+speak MCP use the models as tools at `/mcp` (both MCP generations, 2025-11-25 and 2026-07-28).
 
 </td>
 <td valign="top">
@@ -143,7 +144,7 @@ app menu or the menu bar icon).
 </table>
 
 ### Server and log
-The server's address, the token, the allowed devices and the endpoints; the log of the last 100 requests with the
+The server's address, the token, the allowed devices, the endpoints and the MCP switch with a ready example; the log of the last 100 requests with the
 client, the model, the status, the key that came and the tokens.
 
 <table>
@@ -285,6 +286,23 @@ curl http://127.0.0.1:1235/v1/chat/completions \
 ```
 
 Model ids are listed by `GET /v1/models` and shown on the Models page.
+
+### MCP
+
+Turn on **MCP server** on the same page (off by default). MCP programs then reach the models at `/mcp`, with the same
+token and the same allowed devices:
+
+```json
+{ "mcpServers": { "okai-helper": { "type": "http", "url": "http://127.0.0.1:1235/mcp",
+  "headers": { "Authorization": "Bearer <token>" } } } }
+```
+
+Tools: `list_models`, `ask_model` (a question to a model, optionally with a prompt profile) and `embed`; the prompt
+profiles also come as MCP prompts. Check it with the official MCP Inspector:
+`npx @modelcontextprotocol/inspector --cli http://127.0.0.1:1235/mcp --transport http --header "Authorization: Bearer <token>" --method tools/list`.
+
+Step by step, with examples for Claude Code, VS Code, Cursor, Continue, LM Studio and Open WebUI and help when
+something does not work: [docs/MCP.md](docs/MCP.md) ([Deutsch](docs/MCP.de.md)).
 
 ## Licence
 
