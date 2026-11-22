@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.2 (2026-11-21)
+
+- Downloads and the update check try a failed connection again, twice, after 2 and 5 seconds (GitHub refused
+  connections for hours on 2026-11-21: installing a runtime, a download from Hugging Face and the update check failed
+  until they were started again). Only a connection that got no answer is tried again; a switch under Privacy and
+  network that is turned off in between, or a cancelled download, stops it at once.
+
 ## 0.1.1 (2026-11-21)
 
 - Prompt cache per model (Settings, Hardware; 2 GB by default): llama.cpp keeps earlier prompts in memory, so going back
