@@ -573,3 +573,31 @@ The scores from the upload are open.
   With `--cache-ram 0` the remaining 21 answers ran through.
 - After a server stops, Metal frees its memory a moment later: mix2 started 0.3 s after IQ3_XXS and failed every
   answer with "Insufficient Memory"; the script now waits until the wired memory is under 4 GB.
+
+## Intel Mac: the x64 app, its sandbox and a first speed, 2026-11-23
+
+MacBook Pro 14,1 (2017): Core i5-7360U, 2 cores, 8 GB, Iris Plus 640, macOS 15.8.3 (OpenCore Legacy Patcher; Apple
+supports macOS 13 at most on this model, so the result says nothing about Apple's own systems). Test DMG 2f56ca4 (x64),
+llama.cpp b9660 macos-x64 installed by the app, unsloth/Qwen3-1.7B-GGUF Q4_K_M (1.1 GB) downloaded by the app, context
+8192, on the CPU (the Intel builds have no Metal). A Docker VM of about 2 GB was running beside it.
+
+- The app plans the model `cpu` / `intelCpu`; MLX, Parakeet and the GPU switch are not offered.
+- Load: 9.1 s. A short answer: 13.8 tokens/s; about 150 words: 11.2 tokens/s (the app's own figure, one run each, not
+  the 3-run average of the other tables).
+- Sandbox ("Models without network" on): the guard monitor shows "network blocked" for the engine. The engine's profile
+  (`engineProfile` in src/main/netguard.ts), tried with curl on the same Mac: the internet (1.1.1.1) refused (curl 7), a
+  name lookup refused (curl 6), another loopback port refused (curl 7), the local network refused (curl 7); without the
+  sandbox the same Mac reaches huggingface.co (HTTP 200). The same as on Apple silicon.
+
+### llama-bench on the Intel Mac, 2026-11-23
+
+The same MacBook Pro 14,1 (2017, 2 cores, 8 GB, OCLP). llama.cpp b9660 macos-x64 (`llama-bench -p 512 -n 128 -r 3`,
+CPU with Accelerate's BLAS, 2 threads), unsloth's Qwen3 GGUFs (SHA-256 checked):
+
+| Model | Size | Prompt t/s | Generation t/s |
+| --- | ---: | ---: | ---: |
+| Qwen3 1.7B Q4_K_M | 1.03 GiB | 54.97 ± 3.61 | 15.66 ± 0.92 |
+| Qwen3 4B Q4_K_M | 2.32 GiB | 22.78 ± 0.12 | 7.35 ± 0.04 |
+
+Generation falls about in proportion to the file size (memory bandwidth): tokens/s × GiB stays near 16–17 on this Mac.
+Newer Intel Macs with more cores are faster; not measured here.

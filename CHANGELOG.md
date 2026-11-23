@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.3.0 (2026-11-23)
+
+- Intel Macs: a download of its own, `okAI-helper-0.3.0-x64.dmg`, next to `okAI-helper-0.3.0-arm64.dmg` for Apple
+  silicon (two apps, no universal app). On an Intel Mac the models run on the CPU with llama.cpp and whisper.cpp; MLX,
+  MLX image models and Parakeet exist for Apple silicon only and are hidden there, as are the GPU switches. The Models
+  page says how fast an Intel Mac is (measured on a MacBook Pro from 2017 with 2 cores: Qwen3 1.7B about 16 tokens per
+  second, Qwen3 4B about 7), and "Runs here" shows model files up to about 3 GB. The network guard blocks the engines on
+  an Intel Mac the same way as on Apple silicon (checked on a real Intel Mac). Intel support is for a limited time:
+  macOS 26 Tahoe is the last macOS for Intel Macs.
+- The Intel app started on a Mac with Apple silicon by mistake runs under Rosetta; it notices this and installs the
+  Apple silicon engines and, with the next update, the Apple silicon app.
+- The update check picks the DMG that fits the Mac.
+
 ## 0.2.0 (2026-11-22)
 
 - MCP server (Server page, off by default): programs that speak MCP use the local models at /mcp of the app's server,

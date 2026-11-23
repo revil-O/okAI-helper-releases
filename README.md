@@ -188,7 +188,16 @@ download's checksum, signature and notarization.
 
 ## Requirements
 
-- A Mac with Apple Silicon and macOS 14 or newer. Tested on a Mac mini M4 with 16 GB and a MacBook Pro M2 with 24 GB.
+- A Mac with macOS 14 or newer. Two downloads: `okAI-helper-X.Y.Z-arm64.dmg` for Apple Silicon (tested on a Mac mini
+  M4 with 16 GB and a MacBook Pro M2 with 24 GB) and `okAI-helper-X.Y.Z-x64.dmg` for Intel Macs. An Intel app started
+  on Apple Silicon by mistake runs under Rosetta and updates itself to the Apple Silicon version.
+- On an Intel Mac the models run on the CPU, with llama.cpp and whisper.cpp only (MLX exists for Apple Silicon only),
+  and much slower: on a MacBook Pro from 2017 with 2 cores Qwen3 1.7B answers at about 16 tokens per second, Qwen3 4B
+  at about 7 ([measurements](docs/MEASUREMENTS.md)); model files up to about 3 GB are recommended. **Intel support is
+  for a limited time**: Apple made macOS 26 Tahoe the last macOS for Intel Macs
+  ([Apple, WWDC25 Platforms State of the Union](https://developer.apple.com/videos/play/wwdc2025/102/);
+  [Engadget](https://www.engadget.com/computing/macos-tahoe-is-the-end-of-the-line-for-intel-macs-113036626.html)), and the Intel
+  version ends when building or testing it no longer works.
 - Nothing else: the app installs its engines itself (*Start → Engines*), at fixed, tested versions and checked by
   their checksums: llama.cpp b9660 or b12131, chosen in the settings (about 25 MB) and, optionally for MLX models, mlx-lm 0.32.2 with its own Python (and mlx-vlm 0.7.10 for MLX models that read pictures)
   (about 0.6 GB). Homebrew or the Mac's Python are not used; an own llama-server or Python can still be set under
