@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.1 (2026-11-24)
+
+- Qwen3 models that switch thinking on and off (the hybrid ones, like Qwen3 1.7B, 4B, 8B, 30B-A3B): with thinking off
+  they get the values their model card gives for that mode (temperature 0.7, top-p 0.8, top-k 20, min-p 0) and a
+  presence penalty of 1.5, instead of the values for thinking. Small models answered endlessly less often in a test on
+  an Intel Mac (Qwen3 1.7B: 4 of 5 before, 1 of 5 with these values), but not never; a bigger model or thinking on
+  answers better. The model's own settings, a prompt profile's and a program's values still come first. Qwen3-2507
+  models, which have no switch, keep their maker's values.
+- A model planned on the CPU (an Intel Mac, or the GPU switched off) starts with `-ngl 0` only; a second `-ngl 999`
+  after it had no effect, as the GPU was off anyway.
+
 ## 0.3.0 (2026-11-23)
 
 - Intel Macs: a download of its own, `okAI-helper-0.3.0-x64.dmg`, next to `okAI-helper-0.3.0-arm64.dmg` for Apple
