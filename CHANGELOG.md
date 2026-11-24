@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.2 (2026-11-24)
+
+- Server: pictures, sound and video in a request are taken only inline (data: URLs, or base64 for audio data), not
+  by address or file path. An engine would otherwise fetch such an address itself (also on the local network or this
+  computer) or, for MLX models that read pictures, open a file path on this Mac. A request with one gets 400 with a
+  short reason. The network guard already stopped the fetching; reading files it did not stop. Found while checking
+  the security changes of llama.cpp v1.0.0 (https://github.com/ggml-org/llama.cpp/pull/32115); no published llama.cpp
+  advisory concerns the builds the app uses (b9660, b12131).
+
 ## 0.3.1 (2026-11-24)
 
 - Qwen3 models that switch thinking on and off (the hybrid ones, like Qwen3 1.7B, 4B, 8B, 30B-A3B): with thinking off
