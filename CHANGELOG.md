@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.4.0 (2026-11-25)
+
+- New look, the same as the website's: deep navy in dark mode, blue buttons, light blue and cyan accents, rounder
+  cards; light mode in the same colours. The fonts come with the app: Space Grotesk for headings, DM Sans for text,
+  JetBrains Mono for code (all under the SIL Open Font License, texts in THIRD_PARTY_NOTICES.txt). Text keeps a
+  contrast of at least 4.5:1 in both modes. The start page shows the website's moving mesh behind its cards: it moves
+  for a few seconds after the page opens and while the pointer moves over it, then stands still (moving it costs
+  about 7 % of a core, standing nothing measurable), and it stays still with "Reduce motion". A blue app icon.
+- Server page: this computer's own network addresses are shown always, also while "Reachable in the network" is off.
+  Allowed devices are easier to add: a button per own network ("Allow 192.168.1.0/24") and a list of the devices that
+  were refused lately (403), each with "Allow".
+- Settings, Speech input: the microphone. Whether macOS allows the app to use it (with a button to ask or the way to
+  System Settings), which microphone the chat records from (the system default when it is unplugged), and a test
+  recording of 3 seconds with a level meter, played back in the app only.
+- Updates: the update is mounted with `diskutil image attach` and ejected with `diskutil eject` on macOS 15 and newer;
+  `hdiutil attach`, which macOS reports as deprecated there, stays for macOS 14.
+
 ## 0.3.2 (2026-11-24)
 
 - Server: pictures, sound and video in a request are taken only inline (data: URLs, or base64 for audio data), not

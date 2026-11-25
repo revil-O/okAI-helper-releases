@@ -23,7 +23,7 @@ Chat · Prompt profiles · Speech input · OpenAI-compatible server · MCP serve
 
 The app speaks **English** · Deutsch · Español · Português (Brasil) · Português (Portugal)
 
-<sub>Made by the author of [VulKara](https://github.com/revil-O/VulKara), with the same look and feel. This repository holds the signed and notarized releases; the app looks here for its updates.</sub>
+<sub>Made by the author of [VulKara](https://github.com/revil-O/VulKara). This repository holds the signed and notarized releases; the app looks here for its updates.</sub>
 
 </div>
 
