@@ -1,5 +1,40 @@
 # Changelog
 
+## 0.5.0 (2026-11-26)
+
+- Models are unloaded by themselves after a while without requests, so their memory is free again: 60 minutes by
+  default (Settings, Memory: from 5 minutes to a day, or never), per model in its settings, and per request for
+  programs: `ttl` in seconds as in LM Studio, or `keep_alive` as in Ollama (a duration such as "10m" or seconds; 0
+  unloads the model right after the answer, a negative value never). The last request decides; without a value the
+  model's or the app's time applies. A model is never unloaded while it answers. The Loaded page shows when.
+- Server: "Answer only loaded models". A request for a model that is not loaded gets 409 instead of loading it (and
+  unloading the one before), for programs that must not load models themselves.
+- A program that streams an answer and has to wait while its model loads gets SSE comments (`: loading`, ignored by
+  clients) from the start, so it does not give up; an error during the load comes as the stream's last event.
+- Intel Macs whose processor lacks AVX2, FMA or F16C (Intel processors before 2013, on macOS 14 only with OpenCore
+  Legacy Patcher): the engines for Intel Macs need these instructions and stopped at once with SIGILL when a model
+  loaded. The app now checks the processor at start: on such a Mac it says what is missing, why no model runs and
+  what would help, and quits after OK. The model search's "Runs here" no longer lists models there.
+- Start page: "What runs on this Mac" when something limits it, with what to do: no engine installed yet, an Intel Mac
+  (models up to about 3 GB), the GPU switched off, little memory for models.
+- Status bar: the speech engine in memory (whisper.cpp or Parakeet) shows with its own "Unload".
+- Downloads: a page of their own (Library, Downloads) and an icon in the status bar with the number of running
+  downloads; the pointer on it shows each one with its progress and time left, a click opens the page.
+- Model search: each hit says whether its smallest download runs on this Mac, and if not why and what to take instead.
+- Updates: the app looks for a new version every hour (was once a day), with "Look for updates" on, and asks only
+  whether the release list changed (a conditional request). An update is not installed while the app is at work (a model answers or loads, a download or an engine installation runs);
+  what begins while the update downloads finishes first, then the app restarts into the new version.
+- The engines' log (`~/Library/Logs/okAI-helper/engine.log`) no longer grows without end: past 50 MB it becomes
+  `engine.old.log` and a new one starts (on a test Mac it had reached 41 GB in three weeks). The updater writes what it
+  did into `update.log` next to it, also the step after the app quit (swapped in, or why the old version stayed).
+- A newer version installed over the running app (dragged in from the DMG while it ran) is noticed: macOS keeps
+  running the old files, so the app says which version is installed and offers "Restart now".
+- Windows (in preparation): the installer for Windows on ARM installs the app completely again (electron-builder
+  26.15.7).
+- Light mode looks like the website's light look: no tinted groups in the navigation (thin lines between them, the
+  page in use in blue), a white header, white buttons with a clear border that turn blue on hover.
+
+
 ## 0.4.0 (2026-11-25)
 
 - New look, the same as the website's: deep navy in dark mode, blue buttons, light blue and cyan accents, rounder
