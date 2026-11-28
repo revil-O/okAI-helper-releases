@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.0 (2026-11-26)
+## 0.5.0 (2026-11-28)
 
 - Models are unloaded by themselves after a while without requests, so their memory is free again: 60 minutes by
   default (Settings, Memory: from 5 minutes to a day, or never), per model in its settings, and per request for
